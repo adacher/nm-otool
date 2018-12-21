@@ -29,13 +29,15 @@ static void check_2(char **tmp, int i, struct section_64 *sec, struct segment_co
     }
 }
 
-char **get_section_64(char **load, struct segment_command_64 *seg)
+char **get_section_64(char **load, struct segment_command_64 *seg, size_t filesize)
 {
     int i;
     struct section_64 *sec;
     char **tmp;
 
     i = 0;
+    if (filesize < seg->fileoff)
+        return (0); // a changer
     sec = (struct section_64*)(seg + 1);
     if (seg->nsects <= 0)
         return (load);

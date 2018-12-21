@@ -10,7 +10,10 @@ SRC_NM = srcs/nm.c \
 		srcs/nm_sections.c \
 		srcs/nm_display.c \
 		srcs/nm_list.c \
-		srcs/nm_mask.c
+		srcs/nm_mask.c \
+		srcs/nm_ar.c \
+		srcs/nm_symbols.c \
+		srcs/nm_list_two.c
 
 SRC_OTOOL = srcs/otool.c \
 			srcs/otool_errors.c \

@@ -41,6 +41,8 @@ int		check_format(void *ptr, char *av)
 		return (1);
 	else if (magic == (int)FAT_CIGAM)
 		return (1);
+	else if (!(ft_strncmp(ptr, ARMAG, SARMAG)))
+		return (1);
 	else
 	{
 		unvalid_object(av);

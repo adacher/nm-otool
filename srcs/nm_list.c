@@ -1,67 +1,59 @@
 #include <ft_nm.h>
 
-static void		push_list_next(t_data *tmp, t_data *new)
+static int check_list_one(t_data *tmp, t_data *init, t_data **info)
 {
-	while (tmp)
+	if (ft_strcmp(tmp->str, init->str) > 0)
 	{
-		if (!tmp->next)
-		{
-			tmp->next = new;
-			break ;
-		}
-		if (ft_strcmp(tmp->next->str, new->str) > 0)
-		{
-			new->next = tmp->next;
-			tmp->next = new;
-			break ;
-		}
-		if (ft_strcmp(tmp->next->str, new->str) == 0)
-		{
-			if (tmp->next->value > new->value)
-			{
-				new->next = tmp->next;
-				tmp->next = new;
-				break ;
-			}
-		}
-		tmp = tmp->next;
+		init->next = tmp;
+		*info = init;
+		return (0);
 	}
+	return (-1);
 }
 
-static void		push_list(t_data **lt, t_data *tmp, t_data *new)
+static int check_list_two(t_data *tmp, t_data *init, t_data **info)
 {
-	if (ft_strcmp(tmp->str, new->str) > 0)
+	if (!(ft_strcmp(tmp->str, init->str)))
 	{
-		new->next = tmp;
-		*lt = new;
-		return ;
-	}
-	if (ft_strcmp(tmp->str, new->str) == 0)
-	{
-		if (tmp->value > new->value)
+		if (tmp->value > init->value)
 		{
-			new->next = tmp;
-			*lt = new;
-			return ;
+			init->next = tmp;
+			*info = init;
+			return (0);
 		}
 	}
-	push_list_next(tmp, new);
+	return (-1);
 }
 
-void			add_list_64(t_data **lt, char *str, struct nlist_64 array)
+static int		fill_list(t_data **info, t_data *tmp, t_data *init)
 {
-	t_data *new;
+	if (!(check_list_one(tmp, init, info)))
+		return (0);
+	else if (!(check_list_two(tmp, init, info)))
+		return (0);
+	else if (!(further_fill(tmp, init)))
+		return (0);
+	else
+		return (-1);
+}
+
+void			create_64(t_data **info, char *str, struct nlist_64 array) //str bug cant access memory
+{
+	t_data *init;
 	t_data *tmp;
 
-	tmp = *lt;
-	new = (t_data*)malloc(sizeof(t_data));
-	new->value = array.n_value;
-	new->type = array.n_type;
-	new->sect = array.n_sect;
-	new->str = str;
-	new->next = NULL;
-	if (!*lt)
-		*lt = new;
+	tmp = *info;
+	init = (t_data*)malloc(sizeof(t_data));
+	init->value = array.n_value;
+	init->type = array.n_type;
+	init->sect = array.n_sect;
+	init->str = str;
+	init->next = NULL;
+	if (!*info)
+		*info = init;
 	else
-		push_list(lt, tmp, new);
+	{
+		if (fill_list(info, tmp, init) != 0)
+			return ;
+	}
 }

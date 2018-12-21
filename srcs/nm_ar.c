@@ -23,32 +23,31 @@ static void         display_object_name(struct ar_hdr *ar_h, char *av)
 	ft_putendl("):");
 }
 
-static void				treat_object(void *ptr, char *av)
+static void				treat_object(void *ptr, char *av, size_t filesize)
 {
 	struct ar_hdr		*lib;
 	unsigned int		magic;
 
 	lib = ptr;
+    ft_putchar('\n');
 	display_object_name(lib, av);
 	ptr += sizeof(* lib) + archive_header_size(lib->ar_name);
 	magic = *(int *)ptr;
 	if (magic == MH_MAGIC)
 		macho_32(ptr);
 	else if (magic == MH_MAGIC_64)
-		macho_64(ptr);
+		macho_64(ptr, filesize);
 }
 
-void    archive_lib(void *ptr, char *av, uint32_t filesize, void *tmp)
+void    archive_lib(void *ptr, char *av, size_t filesize, void *tmp)
 {
     struct ar_hdr			*lib;
 
     lib = (struct ar_hdr *)ptr;
-	ft_putstr("Archive : ");
-    ft_putendl(av);
     while (ptr + ft_atoi(lib->ar_size) + sizeof(*lib)
 			<= tmp + filesize)
 	{
-        treat_object(ptr, av);
+        treat_object(ptr, av, filesize);
         ptr += ft_atoi(lib->ar_size) + sizeof(*lib);
 		lib = (struct ar_hdr *)(ptr);
     }
