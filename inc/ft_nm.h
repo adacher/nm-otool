@@ -14,54 +14,83 @@
 # include <libft.h>
 # include <ar.h>
 
-typedef struct			s_data
+typedef struct			s_symdata // NLIST_64
 {
-	unsigned long long	value;
 	char				*str;
 	uint8_t				type;
-	uint8_t				sect;
-	struct s_data		*next;
-}						t_data;
+	uint8_t				stab;
+	uint8_t				ext;
+	uint8_t				nsect;
+	uint8_t				pext;
+	uint64_t			value;
+	int					t;
+	struct s_symdata	*next;
+}						t_symdata;
+
+typedef struct			s_section
+{
+	char				*name;
+	unsigned int		index;
+	struct s_section	*end;
+	struct s_section	*next;
+}						t_section;
+
+// nm.c
+void		nm(void *ptr, char *av, size_t filesize, void *tmp);
+
+					// 32 //
+// loadcmd_32.c
+void 		bits_32(void *ptr, uint32_t filesize);
+// sections_32.c
+void 		process_segment_32(struct load_command *lc, t_section **psects);
+// symtable_32.c
+void 		process_symtable_32(struct load_command *lc, void *ptr, t_symdata **psymbols, size_t filesize);
+// sort_32.c
+void 		insertion_sort(t_symdata **slist);
+// mask_32.c
+void		mask_32(uint64_t value, uint8_t type);
+
+					// 64 //
+// loadcmd_64.c
+void 		bits_64(void *ptr, uint32_t filesize);
+// sections_64.c
+void 		process_segment_64(struct load_command *lc, t_section **psects);
+// symtable_64.c
+void 		process_symtable_64(struct load_command *lc, void *ptr, t_symdata **psymbols, size_t filesize);
+// sort_64.c
+void 		insertion_sort(t_symdata **slist);
+// mask_64.c
+void		mask_64(uint64_t value, uint8_t type);
 
 
+					// ar_and_fat //
+//ar.c
+void		archive_lib(void *ptr, char *av, size_t filesize, void *tmp);
 
-// nm_sections
-char **get_section_64(char **load, struct segment_command_64 *seg, size_t filesize);
+					// display //
+//errors.c
+int			no_file(char *av);
+void 		display_av(char *av);
+int 		file_is_dir(char *av);
+int 		unvalid_object(char *av);
+int			check_format(void *ptr, char *av);
+// display/display.c
+void		display_64(t_section *psects, t_symdata *psymbols);
+void		display_32(t_section *psects, t_symdata *psymbols);
+// display/symbols.c
+void		display_symbol(t_section *psects, t_symdata *psymbols);
 
-// nm_utility
-int		check_format(void *ptr, char *av);
-
-//  nm_errors
-int	no_file(char *av);
-void display_av(char *av);
-int file_is_dir(char *av);
-int unvalid_object(char *av);
-int check_file(struct stat buf, char *av, int error);
-
-// nm_macho
-void macho_32(void *ptr);
-void macho_64(void *ptr, uint32_t filesize);
-
-// nm_fat
-void fat_32(void *ptr);
-void fat_64(void *ptr);
-
-// nm_display
-void display_m64(void *ptr, char **tab, struct symtab_command *sym, size_t filesize);
-
-// nm_list
-void			create_64(t_data **lt, char *str, struct nlist_64 array);
+					// common //
+// check_file.c
+int			check_file_content(void *ptr, size_t filesize);
+int			verify_symtab(struct load_command *lc, size_t filesize, size_t checksize);
+// check_32.c
+int			verify_lc_32(struct mach_header *header, size_t filesize, uint32_t nbcmd);
+// check_64
+int			verify_lc_64(struct mach_header_64 *header, size_t filesize, uint32_t nbcmd);
+//tests.c
+void		print_fat_header(void *ptr);
 
 
-// nm_mask
-void				mask_32(unsigned long long n);
-void				mask_64(unsigned long long n);
-// nm_ar
-void    archive_lib(void *ptr, char *av, size_t filesize, void *tmp);
-
-// nm_symbols
-void display_symbol(t_data *lt, char **tab);
-
-// nm_list_two
-int		further_fill(t_data *tmp, t_data *init);
+void do_fat(void *ptr, size_t filesize);
 #endif

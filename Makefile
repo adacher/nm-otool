@@ -3,25 +3,33 @@ NAME2 = ft_otool
 
 FLAGS = -Wall -Werror -Wextra
 
-SRC_NM = srcs/nm.c \
-		srcs/nm_errors.c \
-		srcs/nm_macho.c \
-		srcs/nm_fat.c \
-		srcs/nm_sections.c \
-		srcs/nm_display.c \
-		srcs/nm_list.c \
-		srcs/nm_mask.c \
-		srcs/nm_ar.c \
-		srcs/nm_symbols.c \
-		srcs/nm_list_two.c
+SRC_NM = srcs/nm/nm.c \
+		srcs/nm/ar_and_fat/fat.c \
+		srcs/nm/ar_and_fat/ar.c \
+		srcs/nm/display/errors.c \
+		srcs/nm/display/display.c \
+		srcs/nm/display/symbols.c \
+		srcs/nm/64/loadcmd_64.c\
+		srcs/nm/64/mask_64.c\
+		srcs/nm/64/sections_64.c\
+		srcs/nm/64/sort_64.c\
+		srcs/nm/64/symtable_64.c\
+		srcs/nm/32/loadcmd_32.c\
+		srcs/nm/32/mask_32.c\
+		srcs/nm/32/sections_32.c\
+		srcs/nm/32/symtable_32.c\
+		srcs/universal/check_file.c \
+		srcs/universal/check_32.c \
+		srcs/universal/check_64.c \
+		srcs/universal/tests.c
 
-SRC_OTOOL = srcs/otool.c \
-			srcs/otool_errors.c \
-			srcs/otool_macho.c \
-			srcs/otool_fat.c \
-			srcs/otool_display.c \
-			srcs/otool_ar.c \
-			srcs/nm_mask.c
+SRC_OTOOL = srcs/otool/otool.c \
+			srcs/otool/otool_errors.c \
+			srcs/otool/otool_macho.c \
+			srcs/otool/otool_fat.c \
+			srcs/otool/otool_display.c \
+			srcs/otool/otool_ar.c \
+			srcs/otool/otool_mask.c
 
 OBJ_NM = $(SRC_NM:.c=.o)
 OBJ_OTOOL = $(SRC_OTOOL:.c=.o)
