@@ -22,7 +22,7 @@ static void browse_loadcommands_64(struct load_command *lc, uint32_t nbcmd, void
     display_64(psects, psymbols);
 }
 
-void do_bits_64(void *ptr, size_t filesize) // changer nom fonction + clair
+void do_bits_64(void *ptr, size_t filesize)
 {
     struct load_command     *lc;
     struct mach_header_64   *header;

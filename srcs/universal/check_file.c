@@ -58,7 +58,7 @@ int verify_32(void *ptr, size_t filesize)
     header = (struct mach_header *)ptr;
     set_ppc(swap_32(header->cputype) == CPU_TYPE_POWERPC);
     nbcmd = ppc_32(header->ncmds);
-    if (nbcmd == 0) //|| header->sizeofcmds <= 0)
+    if (nbcmd == 0)
         return (0);
     return (verify_lc_32(header, filesize, nbcmd));  
 }

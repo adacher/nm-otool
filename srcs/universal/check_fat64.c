@@ -29,8 +29,6 @@ int verify_fatlc_64(void *ptr, struct fat_header *header, uint32_t nbarch, size_
         checksize += sizeof(*fatarch);
         if (checkoffset > filesize)
             return (0);
-   //     if ((checkoffset + sizeof(fatarch->cputype + fatarch->cpusubtype)) > filesize)
-     //       return (0);
         if (checksize > filesize)
             return (0);
         if (verify_content_f64(ptr, fatarch, filesize) == 0)

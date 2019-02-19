@@ -6,9 +6,9 @@ void		nm(void *ptr, char *av, size_t filesize)
 
 	magic = *(uint32_t *)ptr;
 	if (magic == MH_MAGIC_64 || magic == MH_CIGAM_64)
-		do_bits_64(ptr, filesize);// x86_64 
+		do_bits_64(ptr, filesize);
 	else if (magic == MH_MAGIC || magic == MH_CIGAM)
-		do_bits_32(ptr, filesize); //xi386
+		do_bits_32(ptr, filesize);
 	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
 		do_fat_64(ptr, filesize, av);
 	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
@@ -30,7 +30,7 @@ static int start_nm(int ac, char *ptr, char *av, size_t filesize)
 	}
 	if (ac > 2)
 	{
-		if (ft_strncmp(ptr, ARMAG, SARMAG)) // NEST PAS UNE LIBRAIRIE
+		if (ft_strncmp(ptr, ARMAG, SARMAG))
 		{
 			ft_putchar('\n');
 			display_av(av);
@@ -81,7 +81,7 @@ static int		input_operations(int ac, char *av)
 	if ((fd = open(av, O_RDONLY)) < 0)
 		return (no_file(av));
 	if (fstat(fd, &buf) < 0)
-		return (invalid_object(av)); // invalid non pas unvalid
+		return (invalid_object(av));
 	if (S_ISDIR(buf.st_mode))
 		return (file_is_dir(av));
 	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) ==

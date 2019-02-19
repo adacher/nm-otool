@@ -3,7 +3,7 @@
 
 #include <universal.h>
 
-typedef struct			s_symdata // NLIST_64
+typedef struct			s_symdata
 {
 	char				*str;
 	uint8_t				type;
@@ -26,7 +26,6 @@ typedef struct			s_section
 
 // nm.c
 void		nm(void *ptr, char *av, size_t filesize);
-
 					// 32 //
 // loadcmd_32.c
 void 		do_bits_32(void *ptr, size_t filesize);
@@ -38,7 +37,6 @@ void 		process_symtable_32(struct load_command *lc, void *ptr, t_symdata **psymb
 void 		insertion_sort(t_symdata **slist);
 // mask_32.c
 void		nm_mask_32(uint64_t value, uint8_t type);
-
 					// 64 //
 // loadcmd_64.c
 void 		do_bits_64(void *ptr, size_t filesize);
@@ -50,19 +48,15 @@ void 		process_symtable_64(struct load_command *lc, void *ptr, t_symdata **psymb
 void 		insertion_sort(t_symdata **slist);
 // mask_64.c
 void		nm_mask_64(uint64_t value, uint8_t type);
-
-
 					// ar_and_fat //
 //ar.c
 void		archive_lib(void *ptr, char *av, size_t filesize);
-
 					// display //
-// display/display.c
+// display/display
 void		display_64(t_section *psects, t_symdata *psymbols);
 void		display_32(t_section *psects, t_symdata *psymbols);
-// display/symbols.c
+// display/symbols
 void		display_symbol(t_section *psects, t_symdata *psymbols);
-
 //fat
 void        do_fat_32(void *ptr, size_t filesize, char *av);
 void        do_fat_64(void *ptr, size_t filesize, char *av);
