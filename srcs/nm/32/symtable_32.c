@@ -1,4 +1,4 @@
-#include <ft_nm.h>
+#include <nm.h>
 
 static void add_symdata_32(t_symdata **p, struct nlist *nlist, char *str)
 {
@@ -9,7 +9,7 @@ static void add_symdata_32(t_symdata **p, struct nlist *nlist, char *str)
     loc->type = nlist->n_type & N_TYPE;
     loc->stab = nlist->n_type & N_STAB;
     loc->ext = nlist->n_type & N_EXT;
-    loc->value = nlist->n_value;
+    loc->value = ppc_32(nlist->n_value);
     loc->str = str;
     loc->next = *p;
     *p = loc;
@@ -24,16 +24,16 @@ static void process_symtable_32_2(struct symtab_command *sym, void *ptr, t_symda
     struct nlist            *nlist;
     t_symdata               *p;
 
-    nbsyms = sym->nsyms;
+    nbsyms = ppc_32(sym->nsyms);
     if (nbsyms == 0)
         return ;
     i = 0;
     p = *psymbols;
-    nlist = (struct nlist *)(ptr + sym->symoff);
-    str = (char *)ptr + sym->stroff;
+    nlist = (struct nlist *)(ptr + (ppc_32(sym->symoff)));
+    str = (char *)ptr + ppc_32(sym->stroff);
     while (i < nbsyms)
     {
-        off = nlist[i].n_un.n_strx;
+        off = ppc_32(nlist[i].n_un.n_strx);
         if (off > filesize)
             return ;
         add_symdata_32(&p, &nlist[i], str + off);

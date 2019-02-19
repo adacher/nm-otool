@@ -1,4 +1,4 @@
-#include <ft_nm.h>
+#include <universal.h>
 
 void display_av(char *av)
 {
@@ -20,7 +20,7 @@ int			file_is_dir(char *av)
 	return (0);
 }
 
-int			unvalid_object(char *av)
+int			invalid_object(char *av)
 {
 	ft_putstr(av);
 	ft_putendl(" The file was not recognized as a valid object file\n");
@@ -43,5 +43,5 @@ int		check_format(void *ptr, char *av)
 	else if (!(ft_strncmp(ptr, ARMAG, SARMAG)))
 		return (1);
 	else
-		return (unvalid_object(av));
+		return (invalid_object(av));
 }

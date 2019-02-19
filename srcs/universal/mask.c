@@ -1,8 +1,8 @@
-#include <ft_otool.h>
+#include <universal.h>
 
-void				mask_32(unsigned long long n)
+void				mask_32(uint64_t value)
 {
-	unsigned long long 	mask;
+	uint64_t 			mask;
 	unsigned char		digit;
 	char				output[17];
 	int					i;
@@ -14,7 +14,7 @@ void				mask_32(unsigned long long n)
 	i = -1;
 	while (++i < max)
 	{
-		digit = (n & mask) >> (4 * (max - i - 1));
+		digit = (value & mask) >> (4 * (max - i - 1));
 		mask = mask >> 4;
 		if (digit > 9)
 			output[i] = ('a' + (digit - 10));
@@ -24,9 +24,9 @@ void				mask_32(unsigned long long n)
 	ft_putstr(output);
 }
 
-void				mask_64(unsigned long long n)
+void				mask_64(uint64_t value)
 {
-	unsigned long long 	mask;
+	uint64_t 			mask;
 	unsigned char		digit;
 	char				output[17];
 	int					i;
@@ -38,7 +38,7 @@ void				mask_64(unsigned long long n)
 	i = -1;
 	while (++i < max)
 	{
-		digit = (n & mask) >> (4 * (max - i - 1));
+		digit = (value & mask) >> (4 * (max - i - 1));
 		mask = mask >> 4;
 		if (digit > 9)
 			output[i] = ('a' + (digit - 10));

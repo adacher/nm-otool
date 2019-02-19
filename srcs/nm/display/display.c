@@ -1,4 +1,4 @@
-#include <ft_nm.h>
+#include <nm.h>
 
 static void print_function_name(char *str)
 {
@@ -21,13 +21,39 @@ static void print_function_name(char *str)
     ft_putchar('\n');
 }
 
+void				nm_mask_64(uint64_t value, uint8_t type)
+{
+	if (!value)
+	{
+		if (type != N_UNDF)
+			ft_putstr("0000000000000000");
+		else
+			ft_putstr("                ");
+		return ;
+	}
+	mask_64(value);
+}
+
+void				nm_mask_32(uint64_t value, uint8_t type)
+{
+	if (!value)
+	{
+		if (type != N_UNDF)
+			ft_putstr("00000000");
+		else
+			ft_putstr("        ");
+		return ;
+	}
+	mask_32(value);
+}
+
 void display_32(t_section *psects, t_symdata *psymbols)
 {
     while (psymbols)
     {
         if (psymbols->stab == 0)
         {
-            mask_32(psymbols->value, psymbols->type);
+            nm_mask_32(psymbols->value, psymbols->type);
             ft_putchar(' ');
             display_symbol(psects, psymbols);
             ft_putchar(' ');
@@ -43,7 +69,7 @@ void display_64(t_section *psects, t_symdata *psymbols)
     {
         if (psymbols->stab == 0)
         {
-            mask_64(psymbols->value, psymbols->type);
+            nm_mask_64(psymbols->value, psymbols->type);
             ft_putchar(' ');
             display_symbol(psects, psymbols);
             ft_putchar(' ');

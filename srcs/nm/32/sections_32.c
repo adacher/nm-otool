@@ -1,4 +1,4 @@
-#include <ft_nm.h>
+#include <nm.h>
 
 static void add_section_32(t_section **p, char *sectname)
 {
@@ -47,7 +47,7 @@ void process_segment_32(struct load_command *lc, t_section **psects)
     uint32_t                 nbsect;
 
     segment = (struct segment_command *)lc;
-    nbsect = segment->nsects;
+    nbsect = ppc_32(segment->nsects);
     if (nbsect == 0)
         return ;
     sect = (struct section *)((void *)segment + sizeof(*segment));

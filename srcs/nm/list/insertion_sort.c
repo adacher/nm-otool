@@ -1,4 +1,4 @@
-#include <ft_nm.h>
+#include <nm.h>
 
 static void	sorted_insert(t_symdata **slist, t_symdata *new)
 {

@@ -1,4 +1,4 @@
-#include <ft_nm.h>
+#include <nm.h>
 /*
 static void test_symbol(t_symdata *psymbols)
 {
