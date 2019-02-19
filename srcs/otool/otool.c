@@ -28,6 +28,8 @@ static int			start_otool(char *ptr, char *av, size_t filesize)
 		ft_putendl("Object file is corrupted");
 		return (0);
 	}
+	ft_putstr(av);
+	ft_putendl(":");
 	otool(ptr, av, filesize);
 	return (1);
 }
